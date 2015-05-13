@@ -217,6 +217,8 @@ void adjacentes_m(const GrafoM *grafo, int u, int *v, int max)
 #define MARCADO 1
 #define MAXN 10000
 
+#define RELEASE 1
+
 int algoritmo_prim_m(const GrafoM *grafo) {
     
     int vertices[MAXN];
@@ -233,6 +235,8 @@ int algoritmo_prim_m(const GrafoM *grafo) {
             if (grafo->adj[i][j]) numeroArestas++;
         }
     }
+    
+    int firstRun = 1;
 
     // Vamos passar por todas as arestas
     for (int h = 0; h < numeroArestas; h++) {
@@ -241,12 +245,10 @@ int algoritmo_prim_m(const GrafoM *grafo) {
         int arestaComMenorPeso = INFINITO;
         int iMenor = 0;
         int jMenor = 0;
-        int firstRun = 1;
         
         for (int i = 0; i < grafo->n; i++) {
             for (int j = 0; j < grafo->n; j++) {
                 if (grafo->adj[i][j] && grafo->peso[i][j] < arestaComMenorPeso && (firstRun || vertices[i] == MARCADO || vertices[j] == MARCADO) && !(vertices[i] == MARCADO && vertices[j] == MARCADO)) {
-                    firstRun = 0;
                     arestaComMenorPeso = grafo->peso[i][j];
                     iMenor = i;
                     jMenor = j;
@@ -254,58 +256,42 @@ int algoritmo_prim_m(const GrafoM *grafo) {
             }
         }
         
+        // No início precisamos desmarcar a necessidade dos vértices já terem
+        // sido visitados pois estamos procurando a primeira aresta
+        firstRun = 0;
+        
         // Se não encontrou mais nenhum caminho, acaba
         int temp = 0;
         for (int i = 0; i < grafo->n; i++) {
             temp += vertices[i];
         }
         if (temp == grafo->n) break;
+
+#if RELEASE
+#else
+        // Debug information
+        printf("\n");
+        imprimir_grafo_m(grafo);
+#endif
         
         // Marca arestas como marcadas
         vertices[iMenor] = MARCADO;
         vertices[jMenor] = MARCADO;
         grafo->adj[iMenor][jMenor] = 0;
-
-        // Debug information
-//        printf("\n--------%d %d\n", iMenor, jMenor);
-//        for (int i = 0; i < numeroArestas; i++) {
-//            printf("%d", vertices[i]);
-//        }
-//        printf("\n");
-//        imprimir_grafo_m(grafo);
-        
         total += arestaComMenorPeso;
+        
+#if RELEASE
+#else
+        // Debug information
+        printf("\n");
+        printf("\n-------- %d %d %d\n", iMenor, jMenor, total);
+        for (int i = 0; i < grafo->n; i++) {
+            printf("%d", vertices[i]);
+        }
+        printf("\n\n");
+#endif
+        
     }
-    
-    return total;
-    
-    
-    
-    
-    
-//    custo[0] = 0;
-//    
-//    for (int contagem = grafo->n; contagem > 0; contagem--) {
-//        int no = -1;
-//        for (int i = 0; i < grafo->n; i++) {
-//            if (!fixo[i] && (no == -1 || custo[i] < custo[no])) {
-//                no = i;
-//            }
-//        }
-//        fixo[no] = 1;
-//        
-//        if (custo[no] == INF) {
-//            total = INF;
-//            break;
-//        }
-//        total += custo[no];
-//        
-//        for (int i = 0; i < grafo->n; i++) {
-//            if (custo[i] > grafo->adj[no][i]) {
-//                custo[i] = grafo->adj[no][i];
-//            }
-//        }
-//    }
     
     return total;
 }
