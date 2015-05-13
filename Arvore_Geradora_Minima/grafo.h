@@ -156,13 +156,11 @@ int cauda_ordenacao_topologica(const Grafo *grafo);
 void adjacentes(const Grafo *grafo, int u, int *v, int max);
 
 /**
- * @brief Indica os vértices adjacentes ao vértice @param u. O resultado será salvo no
- * vetor @param v. O valor -1 indicará o fim dos vértices adjacentes.
+ * @brief Usa o grafo @param grafo para indicar o caminho da arvore geradora
+ * minima usando o algoritmo de PRIM. A soma dos pessoas do menor caminho será
+ * indicado no retorno da função.
  *
- * @param grafo Grafo a ser consultado.
- * @param u Vértice de origem.
- * @param[out] v Vetor que receberá os vértices adjacentes.
- * @param max Tamanho do vetor @param v.
+ * @param grafo Grafo a ser consultado e processado.
  */
 int algoritmo_prim(const Grafo *grafo);
 
