@@ -21,13 +21,13 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    scanf("%d %d\n", &n, &m);
+//    scanf("%d %d\n", &n, &m);
 
-    grafo = criar_grafo(n, 1, MATRIZ_DE_ADJACENCIA);
-//    grafo = criar_grafo(7, 1, MATRIZ_DE_ADJACENCIA);
+//    grafo = criar_grafo(n, 1, MATRIZ_DE_ADJACENCIA);
+    grafo = criar_grafo(7, 1, MATRIZ_DE_ADJACENCIA);
 
-    ler_arestas(grafo, m);
-//    ler_arestas(grafo, 15);
+//    ler_arestas(grafo, m);
+    ler_arestas(grafo, 11);
     
     ler_commandos(grafo, ordenacao_topologica);
 
@@ -38,17 +38,18 @@ int main(int argc, char *argv[])
 
 void ler_arestas(Grafo *grafo, int m)
 {
-    int u, v;
+    int u, v, p;
     
-    int us[15] = {2, 5, 2, 0, 4, 0, 1, 4, 1, 5, 0, 1, 5, 3, 2};
-    int vs[15] = {5, 0, 0, 3, 6, 4, 5, 3, 2, 4, 6, 4, 3, 6, 3};
+    int us[11] = {2, 5, 2, 0, 0, 1, 1, 5, 0, 1, 3};
+    int vs[11] = {5, 0, 0, 3, 4, 5, 2, 4, 6, 4, 6};
+    int ps[11] = {2, 1, 5, 8, 3, 13, 21, 5, 12, 7, 2};
     
     int i;
     for (i = 0; i < m; ++i)
     {
-        scanf("%d %d\n", &u, &v);
-        adicionar_aresta(grafo, u, v, 1);
-//        adicionar_aresta(grafo, us[i], vs[i], 1);
+//        scanf("%d %d %d\n", &u, &v, &p);
+//        adicionar_aresta(grafo, u, v, p);
+        adicionar_aresta(grafo, us[i], vs[i], ps[i]);
     }
 }
 
@@ -104,12 +105,12 @@ void ler_commandos(Grafo *grafo, void (*busca_fn)(const Grafo*, int, vertice_fn,
     busca.origem = cabeca_ordenacao_topologica(grafo);
     busca.destino = cauda_ordenacao_topologica(grafo);
     
-//    imprimir_grafo(grafo);
+    imprimir_grafo(grafo);
 //    printf("%d", busca.origem);
 //    printf("%d", busca.destino);
 
-    preenche(busca.predecessor, -1, n_vertices(grafo));
-    busca_fn(grafo, busca.origem, (vertice_fn) copia_predecessor, NULL, &busca);
+//    preenche(busca.predecessor, -1, n_vertices(grafo));
+//    busca_fn(grafo, busca.origem, (vertice_fn) copia_predecessor, NULL, &busca);
 
     free(busca.predecessor);
 }

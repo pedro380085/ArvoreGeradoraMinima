@@ -158,6 +158,10 @@ void adjacentes(const Grafo *grafo, int u, int *v, int max)
     DISPATCHER(adjacentes, , u, v, max);
 }
 
+int algoritmo_prim(const Grafo *grafo) {
+    return algoritmo_prim_m(grafo->matriz);
+}
+
 void busca_em_profundidade(const Grafo *grafo, int s,
         vertice_fn processa_vertice, aresta_fn processa_aresta, void *args)
 {

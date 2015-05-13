@@ -213,6 +213,42 @@ void adjacentes_m(const GrafoM *grafo, int u, int *v, int max)
     v[j] = -1;
 }
 
+#define INF 999999
+#define MAXN 10000
+
+int algoritmo_prim_m(const GrafoM *grafo) {
+    
+    int fixo[MAXN];
+    int custo[MAXN];
+    int total = 0;
+    
+    for(int i=0; i<grafo->n; i++) {
+        fixo[i] = 0;
+        custo[i] = INF;
+    }
+    custo[0] = 0;
+    
+    for(int faltam = grafo->n; faltam>0; faltam--) {
+        int no = -1;
+        for(int i=0; i<grafo->n; i++)
+            if(!fixo[i] && (no==-1 || custo[i] < custo[no]))
+                no = i;
+        fixo[no] = 1;
+        
+        if(custo[no] == INF) {
+            total = INF;
+            break;
+        }
+        total += custo[no];
+        
+        for (int i = 0; i < grafo->n; i++)
+            if (custo[i] > grafo->adj[no][i])
+                custo[i] = grafo->adj[no][i];
+    }
+    
+    return total;
+}
+
 #define BRANCO 0
 #define CINZA  1
 #define PRETO 2

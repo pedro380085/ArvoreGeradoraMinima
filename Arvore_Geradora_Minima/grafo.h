@@ -156,6 +156,17 @@ int cauda_ordenacao_topologica(const Grafo *grafo);
 void adjacentes(const Grafo *grafo, int u, int *v, int max);
 
 /**
+ * @brief Indica os vértices adjacentes ao vértice @param u. O resultado será salvo no
+ * vetor @param v. O valor -1 indicará o fim dos vértices adjacentes.
+ *
+ * @param grafo Grafo a ser consultado.
+ * @param u Vértice de origem.
+ * @param[out] v Vetor que receberá os vértices adjacentes.
+ * @param max Tamanho do vetor @param v.
+ */
+int algoritmo_prim(const Grafo *grafo);
+
+/**
  * @brief Realiza busca em profundidade a partir do vértice @param u. As callbacks
  * processa_vertice e processa_aresta devem retornar 1 se desejar que a busca continue ou
  * 0, caso contrário. Estas callbacks recebem o vetor de cor, o vetor de distâncias e o
